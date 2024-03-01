@@ -12,8 +12,9 @@
                                            nix-shell-path
                                            nix-config
                                            args]}]
+  ; nix develop --command /bin/bash -c export
   (str (if (empty? nix-shell-path)
-         "nix-shell"
+         "nix develop"
          (s/replace nix-shell-path #" " "\\ "))
        " "
        (cond
@@ -25,7 +26,7 @@
 
          :else
          (throw (js/Error. "Nix-config or list of packages is necessary")))
-       " --run export"
+       " --command /bin/bash -c export"
        (when args
          (str " " args))))
 
